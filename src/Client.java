@@ -1,3 +1,5 @@
+import redis.clients.jedis.Jedis;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -9,7 +11,22 @@ import java.util.Map;
  * Created by adrien on 16/06/2016.
  */
 public class Client {
+    private static Jedis jedis = new Jedis("localhost");
+    private final static String prefix = "proxy-";
+
     public static String getPage(String domain) {
+        String page = jedis.get(prefix + domain);
+        if (page != null) {
+            System.out.println("Cache hit for " + domain);
+            return page;
+        }
+        page = getPageFromURL(domain);
+        jedis.set(prefix + domain, page);
+
+        return page;
+    }
+
+    private static String getPageFromURL(String domain) {
         try {
             URL url = new URL(domain);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
