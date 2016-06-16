@@ -36,7 +36,6 @@ public class Client {
                   .append(String.join(";", entry.getValue())).append("\r\n");
             }
             sb.append("\r\n");
-            System.out.println(sb.toString());
 
             sb.append(content);
             return sb.toString();

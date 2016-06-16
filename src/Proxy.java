@@ -49,14 +49,15 @@ public class Proxy implements Runnable {
             String requestLine = sb.toString().split("\r\n")[0];
             System.out.println(requestLine);
             String url = getURLFromRequest(requestLine);
-            System.out.println(url);
             OutputStream output = client.getOutputStream();
 
             String content;
             if (url == null)
                 content = "HTTP/1.1 403 Forbidden\r\n\r\n";
-            else
+            else {
+                System.out.println(url);
                 content = Client.getPage(url);
+            }
 
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(output));
             bw.write(content);
