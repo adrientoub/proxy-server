@@ -29,3 +29,8 @@ jar {
         )
     }
 }
+task copyDepJars(type: Copy) {
+    from configurations.compile
+    into 'build/libs'
+}
+build.finalizedBy(copyDepJars)
