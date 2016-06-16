@@ -27,8 +27,8 @@ gradle build
 ## Usage
 
 To use the program you can use the following command. You can use any port as
-the server port.
+the server port. The address is the address you want your server to bind on.
 
 ```
-java -jar proxy-server-1.0.jar [port]
+java -jar proxy-server-1.0.jar [address] [port]
 ```

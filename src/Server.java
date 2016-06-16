@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -7,20 +8,21 @@ import java.net.Socket;
  */
 public class Server {
     public static void main(String[] args) {
-        if (args.length < 1) {
-            System.err.println("Need to give port");
+        if (args.length < 2) {
+            System.err.println("Need to give address and port");
             return;
         }
 
-        int port = Integer.parseInt(args[0]);
-        System.out.println("Listening on port " + port);
-        new Server(port);
+        String address = args[0];
+        int port = Integer.parseInt(args[1]);
+        System.out.println("Listening on " + address + ":" + port);
+        new Server(port, address);
     }
 
-    public Server(int port)
+    public Server(int port, String address)
     {
         try {
-            ServerSocket s = new ServerSocket(port);
+            ServerSocket s = new ServerSocket(port, 50, InetAddress.getByName(address));
             Socket client;
             while (true) {
                 client = s.accept();
